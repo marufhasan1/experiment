@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+</head>
+	<body>
+		<div class="column-menu pull-right">
+			<span class="show-triger">Remove Column</span>
+			<div class="column-items" data-colselect="col">
+				
+			</div>
+		</div>
+		
+		
+		<div class="column-menu pull-right">
+			<span class="show-triger">Remove Column</span>
+			<div class="column-items" data-colselect="col12">
+				
+			</div>
+		</div>
+		
+		<div class="column-menu pull-right">
+			<span class="show-triger">Remove Column</span>
+			<div class="column-items" data-colselect="col1">
+				
+			</div>
+		</div>
+				
+		<hr />
+		
+		<table class="table table-bordered">
+				<tbody><tr data-colnames="col">
+					<th width="40px">ক্র.নং</th>
+					<th>তারিখ</th>
+					<th>কস্ট পারপাস</th>
+					<th>যার মাধ্যমে</th> 
+					<th>টাকার পরিমাণ</th>
+				</tr>
+				</tbody><tbody data-colelement="col">
+											<tr>
+						<td>1</td>
+						<td>2017-08-08</td>
+						<td>বিদ্যুৎ</td>
+						<td>Jhjk</td>
+						<td>50.00</td>
+					</tr>
+											<tr>
+						<td>2</td>
+						<td>2017-12-18</td>
+						<td>বেতন</td>
+						<td>Maruf</td>
+						<td>500.00</td>
+					</tr>
+										</tbody>
+
+				<tbody><tr>
+					<td colspan="4" class="text-right"><strong>মোট</strong></td>
+					<td><strong>550</strong></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		
+		<table class="table table-bordered">
+				<tbody><tr data-colnames="col12">
+					<th width="40px">ক্র.নং</th>
+					<th>Name</th>
+					<th>কস্ট পারপাস</th>
+					<th>যার মাধ্যমে</th> 
+					<th>টাকার পরিমাণ</th>
+				</tr>
+				</tbody><tbody data-colelement="col12">
+											<tr>
+						<td>1</td>
+						<td>2017-08-08</td>
+						<td>বিদ্যুৎ</td>
+						<td>Jhjk</td>
+						<td>50.00</td>
+					</tr>
+											<tr>
+						<td>2</td>
+						<td>2017-12-18</td>
+						<td>বেতন</td>
+						<td>Maruf</td>
+						<td>500.00</td>
+					</tr>
+										</tbody>
+
+				<tbody><tr>
+					<td colspan="4" class="text-right"><strong>মোট</strong></td>
+					<td><strong>550</strong></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		
+		
+		<table class="table table-bordered">
+				<tbody><tr data-colnames="col1">
+					<th width="40px">ক্র.নং</th>
+					<th>Name</th>
+					<th>Roll</th>
+					<th>যার মাধ্যমে</th> 
+					<th>টাকার পরিমাণ</th>
+				</tr>
+				</tbody><tbody data-colelement="col1">
+											<tr>
+						<td>1</td>
+						<td>2017-08-08</td>
+						<td>বিদ্যুৎ</td>
+						<td>Jhjk</td>
+						<td>50.00</td>
+					</tr>
+											<tr>
+						<td>2</td>
+						<td>2017-12-18</td>
+						<td>বেতন</td>
+						<td>Maruf</td>
+						<td>500.00</td>
+					</tr>
+										</tbody>
+
+				<tbody><tr>
+					<td colspan="4" class="text-right"><strong>মোট</strong></td>
+					<td><strong>550</strong></td>
+				</tr>
+			</tbody>
+		</table>
+		
+	</body>
+	
+	
+	
+	
+<script>
+    $(document).ready(function(){
+
+        $(".show-triger").on('click', function(event) {
+            $(this).next(".column-items").slideToggle();
+        });
+
+        var allselector = $("[data-colnames]");
+        $.each(allselector, function(index, selector){
+
+            //Each Element Set start
+            var selector = $(selector);
+            var selector_data = selector.data("colnames");
+
+            var columns = selector.children();
+            $.each(columns, function(index, val) {
+                 var element = $(val).html();
+                 var sel_item = '<label><input type="checkbox"> '+element+'</label>';
+                 $('[data-colselect="'+selector_data+'"]').append(sel_item);
+            });
+            //Each Element Set end
+        });
+
+        function removeSelected(){
+            $('[data-colselect]').each(function(index, val) {
+                var data = $(val).data("colselect");
+                var header_col = $('[data-colnames="'+data+'"]').children();
+
+                $.each($(val).children(),function(i,v){
+                    var selectbox = $(v).children('input[type="checkbox"]');
+                    var tbody = $('[data-colelement="'+data+'"]');
+                    var rows = tbody.children();
+                    rows.each(function(colindex,row){
+                        cols = $(row).children();
+                        if(selectbox.is(":checked")==true){
+                            $(cols[i]).hide(); //removing body column
+                            $(header_col[i]).hide();
+                        }else{
+                            $(cols[i]).show(); //showing body column
+                            $(header_col[i]).show();
+                        }
+                    });
+                });
+            });
+        }
+
+        $(document).on('click', function(event) {
+            removeSelected();
+        });
+
+    });
+</script>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="stuff, to, help, search, engines, not" name="keywords">
+<meta content="What this page is about." name="description">
+<meta content="Display Webcam Stream" name="title">
+<title>Display Webcam Stream</title>
+  
+<style>
+*,*::before,*::after{
+	margin:0;
+	padding: 0;
+	box-sizing: border-box;
+}
+#container {
+    margin: 0px auto;
+    width: 500px;
+    min-height: 375px;
+    border: 10px #333 solid;
+	position: relative;
+	overflow:hidden;
+}
+#video {
+    width: 100%;
+    background-color: #666;
+	display: block;
+}
+.scale{
+	background: rgba(0,0,0,.5);
+	position: absolute;
+	width: 105px;
+	height: 100%;
+	top:0;
+}
+.s-left{
+	left: 0;
+}
+.s-right{
+	right: 0;
+}
+img{
+border: 5px solid red;
+}
+canvas{
+border: 5px solid red;
+}
+</style>
+<script src="jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+</head>
+  
+<body>
+<div id="container">
+	<div class="scale s-left"></div>
+    <video autoplay="true" id="video"></video>
+	<div class="scale s-right"></div>
+</div>
+		<button id="capture">Capture</button>
+		<div id="output">
+			<img src="" width="200" id="preview" alt="" />
+		</div>
+<script>
+	var video = document.querySelector("#video");
+	 
+	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+	 
+	if (navigator.getUserMedia) {       
+		navigator.getUserMedia({video: true}, handleVideo, videoError);
+	}
+	 
+	function handleVideo(stream) {
+		//video.src = window.URL.createObjectURL(stream);
+		video.srcObject = stream;
+	}
+	 
+	function videoError(e) {
+		// do something
+	}
+</script>
+
+	<script type="text/javascript">
+	/*
+		(function() {
+			var sx,sy,swidth,sheight,dx,dy;
+			sx = $("#sx").val();
+			sy = $("#sy").val();
+			swidth = $("#swidth").val();
+			sheight = $("#sheight").val();
+			dx = $("#dx").val();
+			dy = $("#dy").val();
+			
+			"use strict";
+		 
+			var video, $output;
+			var scalew = 0.33;
+			var scaleh = 0.33;
+		 
+			var initialize = function() {
+				$output = $("#output");
+				video = $("#video").get(0);
+				$("#capture").click(captureImage);                
+			};
+		 
+			var captureImage = function() {
+				var canvas = document.createElement("canvas");
+				canvas.width = video.videoWidth * scalew;
+				canvas.height = video.videoHeight * scaleh;
+				canvas.getContext('2d')
+					  .drawImage(video,sx,sy,swidth,sheight, dx, dy, canvas.width, canvas.height);
+		 
+				//var img = document.createElement("img");
+				var img = document.getElementById('preview');
+				img.src = canvas.toDataURL();
+				$output.prepend(img);
+				console.log(video.videoWidth*scalew);
+				//console.log(video.videoHeight);
+			};
+		 
+			$(initialize);            
+		 
+		}());
+		*/
+			var sx,sy,swidth,sheight,dx,dy;
+			sx = $("#sx").val();
+			sy = $("#sy").val();
+			
+			//dx = $("#dx").val();
+			dy = $("#dy").val();
+			
+			swidth = 600;
+			sheight = 500;
+			sx = 0;
+			sy = 0;
+			dx = 0;
+			dy = 0;
+			
+			var video, $output;
+			var scalew = 1;
+			var scaleh = 1;
+			
+			$output = $("#output");
+			video = $("#video").get(0);
+
+			
+			var captureImage = function() {
+				var canvas = document.createElement("canvas");
+				canvas.width = video.videoWidth * scalew; //DX Absolute Value
+				canvas.height = video.videoHeight * scaleh;
+				
+				canvas.getContext('2d')
+					  .drawImage(video,dx, dy, canvas.width, canvas.height);
+				var img = document.getElementById('preview');
+				document.body.append(canvas);
+				img.src = canvas.toDataURL();
+				
+				//Cropping start here
+				var crop_canvas = document.createElement("canvas");
+				crop_canvas.width = 350;
+				crop_canvas.height = 400;
+				crop_canvas.getContext('2d')
+						.drawImage(canvas,140,0,360,400,0,0,360,400);
+				document.body.append(crop_canvas);
+				//Cropping end here
+				
+			};
+			
+			$("#capture").click(captureImage);                
+		
+	</script>
+</body>
+</html>

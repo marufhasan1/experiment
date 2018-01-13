@@ -20,6 +20,7 @@
     border: 10px #333 solid;
 	position: relative;
 	overflow:hidden;
+    background: #666666;
 }
 #video {
     width: 100%;
@@ -39,11 +40,8 @@
 .s-right{
 	right: 0;
 }
-img{
-border: 5px solid red;
-}
 canvas{
-border: 5px solid red;
+	border: 5px solid red;
 }
 </style>
 <script src="jquery-3.2.1.min.js" crossorigin="anonymous"></script>
@@ -55,10 +53,11 @@ border: 5px solid red;
     <video autoplay="true" id="video"></video>
 	<div class="scale s-right"></div>
 </div>
-		<button id="capture">Capture</button>
-		<div id="output">
-			<img src="" width="200" id="preview" alt="" />
-		</div>
+<form method="POST" action="upload.php">
+	<input type="hidden" name="image" id="image">
+	<input type="submit" value="Upload">
+</form>
+<button id="capture">Capture</button>
 <script>
 	var video = document.querySelector("#video");
 	 
@@ -71,6 +70,7 @@ border: 5px solid red;
 	function handleVideo(stream) {
 		//video.src = window.URL.createObjectURL(stream);
 		video.srcObject = stream;
+		console.log(stream.getTracks());
 	}
 	 
 	function videoError(e) {
@@ -79,89 +79,25 @@ border: 5px solid red;
 </script>
 
 	<script type="text/javascript">
-	/*
-		(function() {
-			var sx,sy,swidth,sheight,dx,dy;
-			sx = $("#sx").val();
-			sy = $("#sy").val();
-			swidth = $("#swidth").val();
-			sheight = $("#sheight").val();
-			dx = $("#dx").val();
-			dy = $("#dy").val();
-			
-			"use strict";
-		 
-			var video, $output;
-			var scalew = 0.33;
-			var scaleh = 0.33;
-		 
-			var initialize = function() {
-				$output = $("#output");
-				video = $("#video").get(0);
-				$("#capture").click(captureImage);                
-			};
-		 
-			var captureImage = function() {
-				var canvas = document.createElement("canvas");
-				canvas.width = video.videoWidth * scalew;
-				canvas.height = video.videoHeight * scaleh;
-				canvas.getContext('2d')
-					  .drawImage(video,sx,sy,swidth,sheight, dx, dy, canvas.width, canvas.height);
-		 
-				//var img = document.createElement("img");
-				var img = document.getElementById('preview');
-				img.src = canvas.toDataURL();
-				$output.prepend(img);
-				console.log(video.videoWidth*scalew);
-				//console.log(video.videoHeight);
-			};
-		 
-			$(initialize);            
-		 
-		}());
-		*/
-			var sx,sy,swidth,sheight,dx,dy;
-			sx = $("#sx").val();
-			sy = $("#sy").val();
-			
-			//dx = $("#dx").val();
-			dy = $("#dy").val();
-			
-			swidth = 600;
-			sheight = 500;
-			sx = 0;
-			sy = 0;
-			dx = 0;
-			dy = 0;
-			
-			var video, $output;
-			var scalew = 1;
-			var scaleh = 1;
-			
-			$output = $("#output");
-			video = $("#video").get(0);
+			var video = $("#video").get(0);
 
-			
 			var captureImage = function() {
 				var canvas = document.createElement("canvas");
-				canvas.width = video.videoWidth * scalew; //DX Absolute Value
-				canvas.height = video.videoHeight * scaleh;
+				canvas.width = video.videoWidth;
+				canvas.height = video.videoHeight;
 				
 				canvas.getContext('2d')
-					  .drawImage(video,dx, dy, canvas.width, canvas.height);
-				var img = document.getElementById('preview');
-				document.body.append(canvas);
-				img.src = canvas.toDataURL();
+					  .drawImage(video,0, 0, canvas.width, canvas.height);
 				
 				//Cropping start here
 				var crop_canvas = document.createElement("canvas");
 				crop_canvas.width = 350;
-				crop_canvas.height = 400;
+				crop_canvas.height = 430;
 				crop_canvas.getContext('2d')
-						.drawImage(canvas,140,0,360,400,0,0,360,400);
+						.drawImage(canvas,140,0,360,430,0,0,360,430);
 				document.body.append(crop_canvas);
 				//Cropping end here
-				
+				$("#image").val(crop_canvas.toDataURL());
 			};
 			
 			$("#capture").click(captureImage);                

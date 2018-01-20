@@ -50,6 +50,13 @@
                     <i class="fa fa-home"></i> &nbsp; Dashboard
                 </a>
             </li>
+
+
+            <li id="privilege">
+                <a href="<?php echo site_url('privilege/privilege'); ?>">
+                    <i class="fa fa-home"></i> &nbsp; Privilege
+                </a>
+            </li>
         </ul>
     </nav>
 </aside>

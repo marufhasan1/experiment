@@ -201,3 +201,4 @@ require_once BASEPATH.'core/CodeIgniter.php';
 
 /* End of file index.php */
 /* Location: ./index.php */
+        $row_string = '"'. $key+1 .'","' . $value->product_code . '","' . $value->product_name . '","' . $value->product_name . '","' . $value->quantity . '","' . $value->sell_price . '","' . $value->godown . '","' . $value->quantity*$value->sell_price . '"';

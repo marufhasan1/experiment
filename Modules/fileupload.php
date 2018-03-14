@@ -13,10 +13,7 @@
                         
                         if ($this->upload->do_upload("attachFile")){
                             $upload_data = $this->upload->data();
-                            
                             $data_emp["image"]="public/employee/".$upload_data['file_name'];
-
-
                         } else {
                             $msg_array=array(
                                 "title" => "Error",

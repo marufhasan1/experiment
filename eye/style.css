@@ -1,0 +1,52 @@
+*,*::before,*::after{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+.wrapper{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.5);
+}
+.circle{
+	position: relative;
+	border: 2px solid #fff;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	margin: 20% auto;
+}
+.eye{
+	position: absolute;
+	display: inline-block;
+	height: 30px;
+	width: 23px;
+	background: #fff;
+	border-radius: 50%;
+	top: 40px;
+	overflow: hidden;
+}
+.left{
+	left: 25px;
+}
+.right{
+	right: 25px;
+}
+.iris{
+	display: inline-block;
+	position: absolute;
+	background: #000;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+}
+
+.ileft{
+	left: 0%;
+	top: 0%;
+}
+.iright{
+	left: 0%;
+	top: 0%;
+}
